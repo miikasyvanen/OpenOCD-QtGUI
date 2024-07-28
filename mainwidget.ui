@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>620</width>
-    <height>436</height>
+    <height>506</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabTelnet">
       <attribute name="title">
@@ -631,7 +631,6 @@ p, li { white-space: pre-wrap; }
             <font>
              <family>Courier New</family>
              <pointsize>12</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -656,7 +655,6 @@ p, li { white-space: pre-wrap; }
             <font>
              <family>Courier New</family>
              <pointsize>12</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -681,7 +679,6 @@ p, li { white-space: pre-wrap; }
             <font>
              <family>Courier New</family>
              <pointsize>12</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -703,7 +700,6 @@ p, li { white-space: pre-wrap; }
             <font>
              <family>Courier New</family>
              <pointsize>12</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -718,7 +714,6 @@ p, li { white-space: pre-wrap; }
             <font>
              <family>Courier New</family>
              <pointsize>12</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -740,7 +735,6 @@ p, li { white-space: pre-wrap; }
             <font>
              <family>Courier New</family>
              <pointsize>12</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -755,7 +749,6 @@ p, li { white-space: pre-wrap; }
             <font>
              <family>Courier New</family>
              <pointsize>12</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -777,7 +770,6 @@ p, li { white-space: pre-wrap; }
             <font>
              <family>Courier New</family>
              <pointsize>12</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
              <kerning>true</kerning>
             </font>
@@ -793,7 +785,6 @@ p, li { white-space: pre-wrap; }
             <font>
              <family>Courier New</family>
              <pointsize>12</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>

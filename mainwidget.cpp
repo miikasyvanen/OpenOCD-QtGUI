@@ -26,7 +26,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <QByteArray>
 #include <QRect>
 
-#include <iostream>
 using namespace std;
 
 
@@ -217,29 +216,22 @@ void MainWidget::flashFileSelect()
 void MainWidget::flashLoad() // download image to FLASH
 {
     QString buffer = main->lineEditFlash->text();
-    int tmp = buffer.size();
     
-    if ((buffer[tmp-3] == 'e' && buffer[tmp-2] == 'l' && buffer[tmp-1] == 'f') ||
-        (buffer[tmp-3] == 'E' && buffer[tmp-2] == 'L' && buffer[tmp-1] == 'F'))
+    if (buffer.endsWith(".elf") || buffer.endsWith(".ELF"))
     {
-        telnet->sendData("soft_reset_halt");
+        this->softReset();
         if (main->checkBoxErase->isChecked())
-            telnet->sendData(main->lineEditFlashWriteCmd->text() + " erase " + main->lineEditFlash->text() + " 0x0 elf");
+            telnet->sendData(main->lineEditFlashWriteCmd->text() + " " + main->lineEditEraseSuffix->text() + " " + main->lineEditFlash->text() + " " + main->lineEditBaseAddress->text() + " elf");
         else
-            telnet->sendData(main->lineEditFlashWriteCmd->text() + " " + main->lineEditFlash->text() + " 0x0 elf");
+            telnet->sendData(main->lineEditFlashWriteCmd->text() + " " + main->lineEditFlash->text() + " " + main->lineEditBaseAddress->text() + " elf");
     }
-    else if ((buffer[tmp-3] == 'b' && buffer[tmp-2] == 'i' && buffer[tmp-1] == 'n') ||
-	     (buffer[tmp-3] == 'B' && buffer[tmp-2] == 'I' && buffer[tmp-1] == 'N'))
+    else if (buffer.endsWith(".bin") || buffer.endsWith(".BIN"))
     {
-        telnet->sendData("soft_reset_halt");
+        this->softReset();
         if (main->checkBoxErase->isChecked())
-	{
-	    telnet->sendData(main->lineEditFlashWriteCmd->text() + " erase " + main->lineEditFlash->text() + " 0x100000 bin");
-	}
+            telnet->sendData(main->lineEditFlashWriteCmd->text() + " " + main->lineEditEraseSuffix->text() + " " + main->lineEditFlash->text() + " " + main->lineEditFlashAddress->text() + " bin");
         else
-	{
-            telnet->sendData(main->lineEditFlashWriteCmd->text() + " " + main->lineEditFlash->text() + " 0x100000 bin");
-	}
+            telnet->sendData(main->lineEditFlashWriteCmd->text() + " " + main->lineEditFlash->text() + " " + main->lineEditFlashAddress->text() + " bin");
     }
 }
 
@@ -484,27 +476,27 @@ void MainWidget::saveConfiguration()
     if (cfgFile.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QTextStream cfgOut(&cfgFile);
-        cfgOut << "BASE = " << main->lineEditBaseAddress->text() << " " << endl;
-        cfgOut << "FLASH = " << main->lineEditFlashAddress->text() << " " << endl;
-        cfgOut << "RAM = " << main->lineEditRamAddress->text() << " " << endl;
+        cfgOut << "BASE = " << main->lineEditBaseAddress->text() << "\n";
+        cfgOut << "FLASH = " << main->lineEditFlashAddress->text() << "\n";
+        cfgOut << "RAM = " << main->lineEditRamAddress->text() << "\n";
         cfgOut << "REMAP = " << main->lineEditRemapAddress->text() << " "
-                     << main->lineEditRemapValue->text() << endl;
+                     << main->lineEditRemapValue->text() << Qt::endl;
         cfgOut << "RESETCPU = " << main->lineEditCpuResetAddress->text() << " "
-                    << main->lineEditCpuResetValue->text() << endl;
+                    << main->lineEditCpuResetValue->text() << Qt::endl;
         cfgOut << "RESETPERIPH = " << main->lineEditPeriphResetAddress->text() << " "
-                       << main->lineEditPeriphResetValue->text() << endl;
-        cfgOut << "FLASHPROBE = " << main->lineEditFlashProbeCmd->text() << " " << endl;
-        cfgOut << "FLASHINFO = " << main->lineEditFlashInfoCmd->text() << " " << endl;
-        cfgOut << "FLASHERASE = " << main->lineEditFlashEraseCmd->text() << " " << endl;
-        cfgOut << "FLASHUNLOCK = " << main->lineEditFlashUnlockCmd->text() << " " << endl;
-        cfgOut << "FLASHWRITE = " << main->lineEditFlashWriteCmd->text() << " " << endl;
-        cfgOut << "ERASESUFFIX = " << main->lineEditEraseSuffix->text() << " " << endl;
-        cfgOut << "RAMWRITE = " << main->lineEditRamWriteCmd->text() << " " << endl;
-        cfgOut << "RESET = " << main->lineEditResetCmd->text() << " " << endl;
-        cfgOut << "HALT = " << main->lineEditHaltCmd->text() << " " << endl;
-        cfgOut << "RESUME = " << main->lineEditResumeCmd->text() << " " << endl;
-        cfgOut << "POLL = " << main->lineEditPollCmd->text() << " " << endl;
-        cfgOut << "SOFTRESET = " << main->lineEditSoftResetCmd->text() << " " << endl;
+                       << main->lineEditPeriphResetValue->text() << Qt::endl;
+        cfgOut << "FLASHPROBE = " << main->lineEditFlashProbeCmd->text() << "\n";
+        cfgOut << "FLASHINFO = " << main->lineEditFlashInfoCmd->text() << "\n";
+        cfgOut << "FLASHERASE = " << main->lineEditFlashEraseCmd->text() << "\n";
+        cfgOut << "FLASHUNLOCK = " << main->lineEditFlashUnlockCmd->text() << "\n";
+        cfgOut << "FLASHWRITE = " << main->lineEditFlashWriteCmd->text() << "\n";
+        cfgOut << "ERASESUFFIX = " << main->lineEditEraseSuffix->text() << "\n";
+        cfgOut << "RAMWRITE = " << main->lineEditRamWriteCmd->text() << "\n";
+        cfgOut << "RESET = " << main->lineEditResetCmd->text() << "\n";
+        cfgOut << "HALT = " << main->lineEditHaltCmd->text() << "\n";
+        cfgOut << "RESUME = " << main->lineEditResumeCmd->text() << "\n";
+        cfgOut << "POLL = " << main->lineEditPollCmd->text() << "\n";
+        cfgOut << "SOFTRESET = " << main->lineEditSoftResetCmd->text() << "\n";
         main->textEditOcdTerminal->append("GUI: GUI-Config saved as " + cfgFile.fileName());
     }
 }
